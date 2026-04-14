@@ -5,7 +5,7 @@
 
     let dados = [10, 20, 30, 40];
     let valor = 25;
-    let posicao = 2;
+    let posicao = 0;
 
     console.log(dados);
     dados.push(0); // abre uma posicao no final
@@ -13,7 +13,7 @@
     console.log(dados);
     for (let i = dados.length - 1; i > posicao; i--) {
         dados[i] = dados[i - 1];
-        console.log("Vetor depois da " + (dados.length-i) + " passagem = " + dados);
+        console.log("Vetor depois da " + (dados.length-i) + "ª passagem = " + dados);
     }
     dados[posicao] = valor
     console.log(dados);
