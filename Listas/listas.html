@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Lista Encadeada Simples</title>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 30px;
+        }
+        button {
+            width: 150px;
+        }
+        input {
+            width: 450px;
+        }
+        input, button {
+            margin: 5px;
+            padding: 8px;
+        }
+        #saida {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>Lista Encadeada (Versão Simples)</h1>
+
+    <input type="text" id="nome" placeholder="Digite um nome">
+    <br>
+    <button onclick="adicionarFim()">Adicionar no Fim</button>
+    <button onclick="adicionarInicio()">Adicionar no Início</button>
+    <button onclick="removerInicio()">Remover Início</button>
+    <br>
+    <button onclick="contar()">Contar Elementos</button>
+    <button onclick="buscar()">Buscar Nome</button>
+    <button onclick="mostrar()">Mostrar Lista</button>
+
+    <div id="saida"></div>
+
+    <script>
+    // "lista encadeada" simulada
+    let valores = [];
+    let proximo = [];
+
+    let inicio = -1;
+    let ultimo = -1;
+
+    function adicionarFim() {
+        let nome = document.getElementById("nome").value;
+        if (nome === "") {
+            alert("Digite um nome");
+            return;
+        }
+        let novoIndice = valores.length;
+        valores.push(nome);
+        proximo.push(-1);
+
+        if (inicio === -1) {
+            inicio = novoIndice;
+            ultimo = novoIndice;
+        } else {
+            proximo[ultimo] = novoIndice;
+            ultimo = novoIndice;
+        }
+
+        document.getElementById("nome").value = "";
+        mostrar();
+    }
+
+    function adicionarInicio() {
+        let nome = document.getElementById("nome").value;
+        if (nome === "") {
+            alert("Digite um nome");
+            return;
+        }
+        let novoIndice = valores.length;
+        valores.push(nome);
+
+        // novo aponta para o antigo início
+        proximo.push(inicio);
+        // novo vira início
+        inicio = novoIndice;
+        // se era vazia
+        if (ultimo === -1) {
+            ultimo = novoIndice;
+        }
+
+        document.getElementById("nome").value = "";
+        mostrar();
+    }
+
+    function removerInicio() {
+        if (inicio === -1) {
+            alert("Lista Vazia");
+            return;
+        }
+        // início passa a ser o próximo
+        inicio = proximo[inicio];
+
+        // se ficou vazia
+        if (inicio === -1) {
+            ultimo = -1;
+        }
+        mostrar();
+
+    }
+
+    function contar() {
+        let quantidade = 0;
+        let atual = inicio;
+        while(atual !== -1) {
+            quantidade++;
+            atual = proximo[atual];
+        }
+    // equivalente a valores.length
+    document.getElementById("saida").innerHTML = "Quantidade de Elementos: "
+        + quantidade;
+    }
+
+    function mostrar() {
+        let resultado = "";
+        let atual = inicio;
+
+        if (inicio === -1) {
+            resultado = "Lista Vazia";
+        }
+
+        while (atual !== -1) {
+            resultado += valores[atual] + " → ";
+            atual = proximo[atual];
+        }
+        resultado += "";
+        document.getElementById("saida").innerHTML = resultado;
+    }
+
+    </script>
+
+</body>
+</html>
